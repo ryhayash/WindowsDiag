@@ -19,7 +19,7 @@ UXTrace is a uniformed tool to collect traces and logs in customer environment. 
     - Note3: -TTD is supported from Windows10 RS5
 
 
-#What UXTrace can do
+# What UXTrace can do
 - Capture ETW trace(-Start -<TraceName>)
 - Capture WPR(-Start -WPR <ProfileName>)
 - Capture Procmon(-Start -Procmon)
@@ -35,7 +35,7 @@ UXTrace is a uniformed tool to collect traces and logs in customer environment. 
 - Set SCM Trace(-Start -SCM -NoWait)
 - Create a bat file for the traces to run traces on earlier version like Windows Server 2012 and Win7(-CreateBatFile)
 	
-#Others
+# Others
 - UXTrace can run with nowait mode(-NoWait)
 => command prompt returns immediately
 - You can change log folder(-LogFolderName)
@@ -49,9 +49,9 @@ UXTrace is a uniformed tool to collect traces and logs in customer environment. 
 - List supported component log(-ListSupportedLog)
 - Show current trace status(-Status)
 
-#Usage
+# Usage
 
-##Start traces
+## Start traces
 1. You can start trace with '-Start'. This option is used for scenario where you can reproduce the issue immediately.(start trace -> repro -> stop trace)
 ```
 .\UXTrace.ps1 -Start -AppX -StartMenu -COM
@@ -65,7 +65,7 @@ UXTrace is a uniformed tool to collect traces and logs in customer environment. 
 .\UXTrace.ps1 -Stop
 ```
 
-##Start WPR 
+## Start WPR 
 1. You can start WPR from UXTrace with '-WPR <ProfileName>'.
 ```
 .\UXTrace.ps1 -Start -WPR General
@@ -82,7 +82,7 @@ Currently below profile is supported
 .\UXTrace.ps1 -SetAutoLogger -WPR General
 ```
 
-##Start Procmon
+## Start Procmon
 1. Start capturing procmon log
 ```
 .\UXTrace.ps1 -Start -Procmon
@@ -97,12 +97,12 @@ Currently below profile is supported
 Restart-Computer
 .\UXTrace.ps1 -StopAutologger -ProcmonPath C:\temp
 ```
-##Capture packet
+## Start packet packetcapturing
 1. You can start capturing packet with '-Netsh' option
 ```
 .\UXTrace.ps1 -Start -Netsh
 ```
-##Start multiple traces at the same time
+## Start multiple traces at the same time
 This would be most common usage in actual field operation. UXTrace exists to provide this scenario. You can start multiple diagnostic traces and tools at the same time.
 
 1. To start multiple traces at the same time, you can just set all options you want to capture. This example shows how to start appx, startmenu and com traces and also wpr with general profile, procmon, packet capture(-netsh), and PSR(problem steps recorder). In addition to this, you can get OS basic log with -Basiclog.
@@ -110,14 +110,15 @@ This would be most common usage in actual field operation. UXTrace exists to pro
 .\UXTrace.ps1 -Start -AppX -StartMenu -COM -WPR General -Procmon -Netsh -PSR -Basiclog
 ```
 
-##Start network scenario trace
+## Start network scenario trace
 1. The scenario trace can be started with -NetshScenario <ScenarioName>. The supported 'ScenarioName' is listed with -ListSupoortedNetshScenario.
+
 ```
 .\UXTrace.ps1 -Start -NetshScenario <ScenarioName>
-
 Ex: .\UXTrace.ps1 -Start -NetshScenario InternetClient_dbg
 ```
 Supported 'ScenarioName' can be listed with -ListSupoortedNetshScenario
+
 ```
 .\UXTrace.ps1 -ListSupoortedNetshScenario
 
@@ -153,7 +154,6 @@ Supported scenarios for -NetshScnario are:
 	  - wwan_dbg
 	  - wwan_wpp
 ```
-
 2. You can also start multiple scenario trace by specifying comma-separated scenario name.
 ```
 .\UXTrace.ps1 -Start -NetshScenario <ScenarioName,ScenarioName,...>
@@ -173,7 +173,7 @@ Supported scenarios for -NetshScnario are:
   - DirectAccess_DBG
   - dns_wpp
 ```
-##Capture TTD(-TTD)
+## Capture TTD(-TTD)
 
 **Requirements**
 - This option is supported from Windows 10 RS5 or later
@@ -183,20 +183,19 @@ Supported scenarios for -NetshScnario are:
 1. Start capturing TTD
 ```
 .\UXTrace.ps1 -Start -TTD [PID|<ProcessName>|<ServiceName>]
-```	
-
+```
 2. Start TTD by specifying PID
 ```
 .\UXTrace.ps1 -Start -TTD <PID>
 Ex: .\UXTrace.ps1 -Start -TTD 3364
-```	
-	
+```
 3. Start TTD by specifying process name
 ```
 .\UXTrace.ps1 -Start -TTD <ProcessName>
 
 Ex: .\UXTrace.ps1 -Start -TTD Explorer.exe
 ```
+
 If there are multiple instances of the process, you will see below message and need to specify PID of the process you want to attach.
 
 ```
@@ -210,14 +209,14 @@ Found multiple processes below.
 - explorer(PID:4760 User:DOMAIN-C\test)
 -----------------------------------------
 Enter PID of process you want to attach: 3004 <---- Enter PID for the process you want to attach
-```	
+```
 4. Start TTD by specifying service name
 ```
 .\UXTrace.ps1 -Start -TTD <ServiceName>
 
 Ex: .\UXTrace.ps1 -Start -WMI -TTD winmgmt
 ```
-##Set autologger for traces(-SetAutoLogger)
+## Set autologger for traces(-SetAutoLogger)
 We support autologger setting for ETW, WPR(boottrace), Procmon(bootlogging), netsh(Persistent). To set autolloger, you can use '-SetAutologger' option. If you specify option other than trace(ex -AppX), -WPR, -Procmon and -Netsh with -SetAutolloger, you will get an error.
 
 1. Set autologger(-SetAutoLogger) 
@@ -231,7 +230,7 @@ We support autologger setting for ETW, WPR(boottrace), Procmon(bootlogging), net
 .\UXTrace.ps1 -StopAutoLogger   /// This will stop all traces and delete autologger settings
 ```
 
-##Delete autologger settings(-DeleteAutologger)
+## Delete autologger settings(-DeleteAutologger)
 1. To delete autolloger settings, run UXTrace with -DeleteAutologger. You don't need restart of the system for the change to take effect.
 ```
 .\UXTrace.ps1 -DeleteAutoLogger
@@ -248,13 +247,13 @@ Note: If you want to add/change performance object, please change 'Providers' fi
 .\UXTrace.ps1 -Start -Perf -PerfInterval 1   // 1 sec interval
 ```
 
-##Start PSR(Problem Steps Recorder)(-Start -PSR)
+## Start PSR(Problem Steps Recorder)(-Start -PSR)
 1. You can start PSR with '-PSR' option.
 ```
 .\UXTrace.ps1 -Start -Shel -PSR
 ```
 
-##Collect component specific log and OS basic log(-CollectLog <ComponentName>)
+## Collect component specific log and OS basic log(-CollectLog <ComponentName>)
 In case you don't need trace and just need logs for basic OS log or component logs/settings, you can use '-Collectlog' option.
 
 1. To collect OS basic log like OS version or IP address and so on, you can specify '-Collectlog Basic'
@@ -270,7 +269,7 @@ In case you don't need trace and just need logs for basic OS log or component lo
 .\UXTrace.ps1 -Start -AppX -Shell -Basiclog
 ```
 
-##List supported component log
+## List supported component log
 To list supported component logs, use -ListSupportedLog.
 ```
 PS> .\UXTrace.ps1 -ListSupportedLog
@@ -292,7 +291,7 @@ Usage:
   Exmaple: .\UXTrace.ps1 -CollectLog AppX,Basic
 ```
 
-##Enable WER setting(-Set / -Unset)
+## Enable WER setting(-Set / -Unset)
 Currently we only support WER setting. You enable WER with '-Set WER'.
 1. Enable WER setting
 ```
@@ -304,7 +303,7 @@ Currently we only support WER setting. You enable WER with '-Set WER'.
 .\UXTrace.ps1 -Unset WER
 ```
 
-##Enable SCM Trace
+## Enable SCM Trace
 Enabling SCM trace is a bit not normal and need to set registry to enable debug log. To enable the trace, follow below step.
 
 1. Enable SCM Trace
@@ -315,7 +314,7 @@ Enabling SCM trace is a bit not normal and need to set registry to enable debug 
 	
 .\UXTrace.ps1 -Stop -BasicLog -Compress -Delete  /// Stop trace after reboot and repro
 ```
-##Create bat file that starts and stops traces(-CreateBatFile)
+## Create bat file that starts and stops traces(-CreateBatFile)
 In case of Windows Server 2012 or earlier, UXTrace does not work as it supports from PowerShell v4. In this case, you can export commands that are issued from UXTrace to bat files. Two bat files for start and stop traces is created if you use CreateBatFile option.
 
 1. Create bat file(Create bat file that contains commands issued from UXTrace)
@@ -332,7 +331,7 @@ After you run above command, two bat files below are created in 'MSLOG' folder o
 - SetAutologger.cmd
 - StopAutologger.cmd
 
-##Start traces with nowait mode(-NoWait)
+## Start traces with nowait mode(-NoWait)
 In case you want command prompt to return immediately and stop trace after repro, you can use '-NoWait'. In this case, the powershell prompt returns right after starting the trace.
 
 1. Start trace with nowait mode. In this case, you need to run 'uxtrace.ps1 -stop' to stop the trace
@@ -344,7 +343,7 @@ In case you want command prompt to return immediately and stop trace after repro
 .\UXTrace.ps1 -Stop
 ```
 
-##Set log folder(-LogFolderName)
+## Set log folder(-LogFolderName)
 You can change log folder(-LogFolderName). By default, UXTrace saves logs to 'MSLOG' folder on desktop which means under profile. In case customer don't want to save large size of date to profile, please use this option.
 
 1. This example shows save traces to C:\temp.
@@ -362,7 +361,7 @@ Restart-Computer
 .\UXTrace.ps1 -StopAutoLogger -LogFolderName D:\MSLOG
 ```
 
-##Compress and delete log folder(-Compress / -Delete)
+## Compress and delete log folder(-Compress / -Delete)
 
 1. Compress log folder after stopping traces(-Compress)
 ```
@@ -377,7 +376,7 @@ Restart-Computer
 .\UXTrace.ps1 -start -Photo -Compress -Delete
 ```
 
-##Save multiple trace data to one etl file(-AsOneTrace)
+## Save multiple trace data to one etl file(-AsOneTrace)
 To capture multiple traces and save the data to one etl file, not multiple etl files, you can use '-AsOneTrace' option. Sometimes you may want to merge etl files to one etl file to see log sequentially, this option is intended for such scenario.
 
 1. Start traces and save traces to one etl file(-AsOneTrace)
@@ -406,7 +405,7 @@ The following commands are supported:
     - SCM: Setting SCM trace
     - WPR: Windows Performance Recoder(wpr.exe)
 ```
-##List supported component log(-ListSupportedLog)
+## List supported component log(-ListSupportedLog)
 ```
 .\UXTrace.ps1 -ListSupportedLog
 
@@ -429,7 +428,7 @@ Usage:
   .\UXTrace.ps1 -CollectLog [ComponentName,ComponentName,...]
   Exmaple: .\UXTrace.ps1 -CollectLog AppX,Basic
 ```
-##Show current trace status(-Status)
+## Show current trace status(-Status)
 If you want to see what traces are currently running or if autologger traces are set or not, '-Status' shows you current trace status. This command is also helpful when you encounter an error during starting trace or setting autologger. In such case, you may want to see if trace is started and if is, should want to stop it. To do this, run with -Status and if you see the running traces in output of -status, run 'UXTrace.ps1 -stop' to stop them. 
 ```
 .\UXTrace.ps1 -Status
